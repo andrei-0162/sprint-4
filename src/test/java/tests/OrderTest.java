@@ -1,8 +1,6 @@
 package tests;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import pageObject.*;
+import pageobject.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
@@ -10,11 +8,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.Test;
 import org.junit.After;
 
-import java.time.Duration;
-
 
 @RunWith(Parameterized.class)
-public class orderTest {
+public class OrderTest {
     private WebDriver driver = new ChromeDriver();
     //параметры для формиривания заказа
     private final int entryPoint;
@@ -27,7 +23,7 @@ public class orderTest {
     private final   String leaseTerm;
     private final   String colourScooter;
     private final   String comment;
-    public orderTest(
+    public OrderTest(
             int entryPoint,
             String firstName,
             String lastName,
@@ -52,7 +48,7 @@ public class orderTest {
 
 
     @Parameterized.Parameters
-    public static Object [][] dataIndex() {
+    public static Object [][] testDataForOrder() {
         return new Object[][] {
                 {
                     1,
@@ -84,7 +80,7 @@ public class orderTest {
     @Test
     public void testOrderTest() {
         // ---- старт выплнения кейса
-        homePage newHomePageObj = new homePage(driver);
+        HomePage newHomePageObj = new HomePage(driver);
         newHomePageObj.openHomePage();
         //закрытие окна полиси куки
         newHomePageObj.closeCookiePopUp();
@@ -96,7 +92,7 @@ public class orderTest {
         }
 
         //формирование заказа
-        orderPage newOrderObj = new orderPage(driver);
+        OrderPage newOrderObj = new OrderPage(driver);
         newOrderObj.createOrderData(
                  firstName,
                  lastName,
@@ -108,10 +104,8 @@ public class orderTest {
                  colourScooter,
                  comment);
 
-        //  проверка результата теста
-        new WebDriverWait(driver, Duration.ofSeconds(1))
-                .until(ExpectedConditions.visibilityOfElementLocated(newOrderObj.getOrderCreatedPopUp()));
-
+        //  проверка результата теста: заказ оформлен успешно
+        newOrderObj.checkOrderSuccessfullyCreated();
     }
 
     @After

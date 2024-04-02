@@ -1,14 +1,20 @@
-package pageObject;
+package pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class orderPage {
+import java.time.Duration;
+
+public class OrderPage {
     private WebDriver driver;
 
-    public orderPage(WebDriver driver) {
+    public OrderPage(WebDriver driver) {
         this.driver = driver;
     }
+
+    private final String ORDER_PAGE_URL = "https://qa-scooter.praktikum-services.ru/order";
 
     //---------- локаторы формы
     // локатор поля "Имя"
@@ -124,8 +130,8 @@ public class orderPage {
             String phoneNumber,
             String sendDate,
             String leaseTerm,
-            String ColourScooter,
-            String Comment
+            String colourScooter,
+            String comment
     ) {
         setFirstNameInput(firstName);
         setLastNameInput(lastName);
@@ -135,15 +141,23 @@ public class orderPage {
         clickNextButton();
         setSendDateInput(sendDate);
         setLeaseTermInput(leaseTerm);
-        setColourScooterInput(ColourScooter);
-        setCommentInput(Comment);
+        setColourScooterInput(colourScooter);
+        setCommentInput(comment);
         clickOrderButtonOnOrderPage();
         clickYesButtonOnPopUpOrderPage();
     }
 
     //метод для перехода на "Главную страницу"
     public void openOrderPage () {
-        driver.get("https://qa-scooter.praktikum-services.ru/order");
+        driver.get(ORDER_PAGE_URL);
     }
+
+    //метод проверки успешного оформления заказа
+    public void checkOrderSuccessfullyCreated() {
+        new WebDriverWait(driver, Duration.ofSeconds(1))
+                .until(ExpectedConditions.visibilityOfElementLocated(orderCreatedPopUp));
+    }
+
+
 
 }

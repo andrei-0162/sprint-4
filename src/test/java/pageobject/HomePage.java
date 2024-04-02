@@ -1,15 +1,25 @@
-package pageObject;
+package pageobject;
 
+import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.regex.Matcher;
+
+import static org.hamcrest.CoreMatchers.is;
 
 
-public class homePage {
+public class HomePage {
     private WebDriver driver;
 
-    public homePage (WebDriver driver) {
+    public HomePage(WebDriver driver) {
         this.driver = driver;
     }
+
+    private final String HOME_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
 
     // ---------- локаторы кнопок [Заказать]
     //локатор кнопки [Заказать] в заголовке страницы
@@ -30,7 +40,7 @@ public class homePage {
 
     //метод для перехода на "Главную страницу"
     public void openHomePage () {
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(HOME_PAGE_URL);
     }
 
     //метод для клика по элементу спсика FAQ
@@ -41,6 +51,15 @@ public class homePage {
     //метод для закрытия окна полиси куки
     public void closeCookiePopUp () {
         driver.findElement(By.id("rcc-confirm-button")).click();
+    }
+
+    //метод проверки видимости текста ответа на вопрос
+    public void checkAnswerVisibility (int answerIndex, String answerActText) {
+        By answerLocator = By.id("accordion__panel-" + answerIndex);
+        new WebDriverWait(driver, Duration.ofSeconds(1))
+                .until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
+        String answerExpText = driver.findElement(answerLocator).getText();
+        MatcherAssert.assertThat(answerActText, is(answerExpText));
     }
 
 }
