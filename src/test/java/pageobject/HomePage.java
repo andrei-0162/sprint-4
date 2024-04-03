@@ -20,6 +20,7 @@ public class HomePage {
     }
 
     private final String HOME_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
+    private final int DEFAULT_TIMER = 1;
 
     // ---------- локаторы кнопок [Заказать]
     //локатор кнопки [Заказать] в заголовке страницы
@@ -56,7 +57,7 @@ public class HomePage {
     //метод проверки видимости текста ответа на вопрос
     public void checkAnswerVisibility (int answerIndex, String answerActText) {
         By answerLocator = By.id("accordion__panel-" + answerIndex);
-        new WebDriverWait(driver, Duration.ofSeconds(1))
+        new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMER))
                 .until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
         String answerExpText = driver.findElement(answerLocator).getText();
         MatcherAssert.assertThat(answerActText, is(answerExpText));

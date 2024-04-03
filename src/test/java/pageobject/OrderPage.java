@@ -15,6 +15,7 @@ public class OrderPage {
     }
 
     private final String ORDER_PAGE_URL = "https://qa-scooter.praktikum-services.ru/order";
+    private final int DEFAULT_TIMER = 1;
 
     //---------- локаторы формы
     // локатор поля "Имя"
@@ -154,7 +155,7 @@ public class OrderPage {
 
     //метод проверки успешного оформления заказа
     public void checkOrderSuccessfullyCreated() {
-        new WebDriverWait(driver, Duration.ofSeconds(1))
+        new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMER))
                 .until(ExpectedConditions.visibilityOfElementLocated(orderCreatedPopUp));
     }
 
