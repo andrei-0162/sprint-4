@@ -90,9 +90,9 @@ public class OrderPage {
         driver.findElement(By.xpath(".//div[@class='Order_Header__BZXOb']")).click();
     }
 
-    public void setLeaseTermInput(String LeaseTerm) {
+    public void setLeaseTermInput(String leaseTerm) {
         driver.findElement(leaseTermInput).click();
-        if (LeaseTerm.equals("сутки")) {
+        if (leaseTerm.equals("сутки")) {
             driver.findElement(leaseTerm1dayInput).click();
         } else {
             driver.findElement(leaseTerm2daysInput).click();
