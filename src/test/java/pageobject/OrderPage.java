@@ -14,8 +14,8 @@ public class OrderPage {
         this.driver = driver;
     }
 
-    private final String ORDER_PAGE_URL = "https://qa-scooter.praktikum-services.ru/order";
-    private final int DEFAULT_TIMER = 1;
+    private final String orderPageUrl = "https://qa-scooter.praktikum-services.ru/order";
+    private final int defaultTimer = 1;
 
     //---------- локаторы формы
     // локатор поля "Имя"
@@ -99,8 +99,8 @@ public class OrderPage {
         }
     }
 
-    public void setColourScooterInput(String Colour) {
-        if (Colour.equals("черный")) {
+    public void setColourScooterInput(String colour) {
+        if (colour.equals("черный")) {
             driver.findElement(blackColourScooterInput).click();
         } else {
             driver.findElement(grayColourScooterInput).click();
@@ -150,12 +150,12 @@ public class OrderPage {
 
     //метод для перехода на "Главную страницу"
     public void openOrderPage () {
-        driver.get(ORDER_PAGE_URL);
+        driver.get(orderPageUrl);
     }
 
     //метод проверки успешного оформления заказа
     public void checkOrderSuccessfullyCreated() {
-        new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMER))
+        new WebDriverWait(driver, Duration.ofSeconds(defaultTimer))
                 .until(ExpectedConditions.visibilityOfElementLocated(orderCreatedPopUp));
     }
 

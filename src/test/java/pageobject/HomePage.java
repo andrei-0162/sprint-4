@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.regex.Matcher;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -19,8 +18,8 @@ public class HomePage {
         this.driver = driver;
     }
 
-    private final String HOME_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
-    private final int DEFAULT_TIMER = 1;
+    private final String homePageUrl = "https://qa-scooter.praktikum-services.ru/";
+    private final int defaultTimer = 1;
 
     // ---------- локаторы кнопок [Заказать]
     //локатор кнопки [Заказать] в заголовке страницы
@@ -41,7 +40,7 @@ public class HomePage {
 
     //метод для перехода на "Главную страницу"
     public void openHomePage () {
-        driver.get(HOME_PAGE_URL);
+        driver.get(homePageUrl);
     }
 
     //метод для клика по элементу спсика FAQ
@@ -57,7 +56,7 @@ public class HomePage {
     //метод проверки видимости текста ответа на вопрос
     public void checkAnswerVisibility (int answerIndex, String answerActText) {
         By answerLocator = By.id("accordion__panel-" + answerIndex);
-        new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMER))
+        new WebDriverWait(driver, Duration.ofSeconds(defaultTimer))
                 .until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
         String answerExpText = driver.findElement(answerLocator).getText();
         MatcherAssert.assertThat(answerActText, is(answerExpText));
